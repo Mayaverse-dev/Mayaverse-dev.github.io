@@ -52,6 +52,10 @@
         scroll-snap-align: start;
       }
 
+      .grid:nth-last-child(2) {
+        min-height: 110vh; /* Ensure at least full viewport height */
+      }
+
       .side-text {
         font-family: "Barlow Condensed", sans-serif;
         writing-mode: vertical-rl;
@@ -213,10 +217,6 @@
           margin-bottom: 1rem;
           position: relative;
           padding-left: 1.5rem;
-        }
-
-        .move-down {
-          margin-top: 1rem;
         }
       }
     </style>
@@ -508,26 +508,24 @@
               <div class="highlight">Massive Story Universes</div>
               <ul>
                 <li>
-                  <i class="fas fa-globe"></i> Grand-scale mythologies crafted
-                  with meticulous worldbuilding detail - every universe has its
-                  own physics, ecology, cultures, histories, and geopolitics,
-                  creating rich and believable worlds.
+                  Grand-scale mythologies crafted with meticulous worldbuilding
+                  detail - every universe has its own physics, ecology,
+                  cultures, histories, and geopolitics, creating rich and
+                  believable worlds.
                 </li>
                 <li>
-                  <i class="fas fa-users"></i> Living worlds that evolve based
-                  on how audiences engage with them and how creators expand
-                  them, making every fan part of the story.
+                  Living worlds that evolve based on how audiences engage with
+                  them and how creators expand them, making every fan part of
+                  the story.
                 </li>
                 <li>
-                  <i class="fas fa-flask"></i> Science fiction and fantasy
-                  narratives that tackle real-world challenges like climate
-                  crisis, AI revolution, and social inequality in ways that
-                  inspire solutions.
+                  Science fiction and fantasy narratives that tackle real-world
+                  challenges like climate crisis, AI revolution, and social
+                  inequality in ways that inspire solutions.
                 </li>
                 <li>
-                  <i class="fas fa-book-open"></i> Experiences as vast and
-                  culturally significant as ancient myths, but addressing the
-                  complexities of our modern world.
+                  Experiences as vast and culturally significant as ancient
+                  myths, but addressing the complexities of our modern world.
                 </li>
               </ul>
             </div>
@@ -1038,25 +1036,40 @@
                   A feature film bringing this world to stunning visual life.
                 </li>
               </ul>
-              <div class="move-down">
+              <p>
                 Most importantly, we're building dedicated story platforms -
                 Maya Storypad, Maya Comics, and Maya Anime - where creators and
                 audiences can explore, expand, and reimagine this universe
                 together. Through these platforms, hundreds of unique characters
                 and story arcs will evolve, each adding new dimensions to this
                 rich tapestry of interconnected narratives.
-              </div>
-              <div class="highlight">This is just the beginning.</div>
+              </p>
               <p>
-                Maya demonstrates how Department of Lore transforms storytelling
-                - creating living worlds that grow with their audiences.
+                This is just the beginning. Maya demonstrates how Department of
+                Lore transforms storytelling - creating living worlds that grow
+                with their audiences.
               </p>
             </div>
           </div>
         </section>
       </div>
 
-    <script>
+      <div class="grid">
+        <section class="section">
+          <div class="section-year">28</div>
+          <div class="section-content">
+            <h2 class="section-title">
+              ARE YOU A CREATOR OR AN ENABLER OF CREATORS?
+            </h2>
+            <div class="section-text">
+              <p>We need you!</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- <script>
       const scrollContainer = document.querySelector(".scroll-container");
       let isScrolling = false;
 
@@ -1084,6 +1097,49 @@
             ),
             behavior: "smooth",
           });
+
+          setTimeout(() => {
+            isScrolling = false;
+          }, 1000);
+        },
+        { passive: false }
+      );
+    </script> -->
+
+    <script>
+      const scrollContainer = document.querySelector(".scroll-container");
+      let isScrolling = false;
+
+      scrollContainer.addEventListener(
+        "wheel",
+        (e) => {
+          const slideHeight = window.innerHeight;
+          const currentScroll = scrollContainer.scrollTop;
+          const maxScroll = scrollContainer.scrollHeight - slideHeight;
+          const isAtBottom = currentScroll >= maxScroll;
+          const isAtTop = currentScroll <= 0;
+
+          // Allow natural scrolling on the last slide if content overflows
+          if ((isAtBottom && e.deltaY > 0) || (isAtTop && e.deltaY < 0)) {
+            return;
+          }
+
+          if (isScrolling) return;
+          isScrolling = true;
+
+          const targetScroll =
+            e.deltaY > 0
+              ? Math.ceil(currentScroll / slideHeight) * slideHeight +
+                slideHeight
+              : Math.floor(currentScroll / slideHeight) * slideHeight -
+                slideHeight;
+
+          scrollContainer.scrollTo({
+            top: Math.max(0, Math.min(targetScroll, maxScroll)),
+            behavior: "smooth",
+          });
+
+          e.preventDefault();
 
           setTimeout(() => {
             isScrolling = false;
