@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Department of Lore Inc.</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Teko:wght@600&family=Barlow+Condensed:wght@600&family=Inter:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      integrity="sha512-Fo3rlrZj/k7ujTnHq6EM3s69SfUycJ/u1d4K/HTU4dqI1KM2s1VbCsd0Qsb4pU6C76C9aJHp6cllgNHg+Ynk3Q=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <style>
+      :root {
+        --primary-red: #e3001b;
+        --background-cream: #fff8e7;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background-color: var(--background-cream);
+        color: var(--primary-red);
+        font-family: "Inter", sans-serif;
+        line-height: 1.5;
+        letter-spacing: -0.02em;
+        overscroll-behavior-y: none;
+      }
+
+      .scroll-container {
+        height: 100vh;
+        overflow-y: scroll;
+        scroll-snap-type: y mandatory;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: [side-start] 4rem [content-start] 1fr [content-end] 4rem [side-end];
+        width: 100%;
+        height: 100vh;
+        scroll-snap-align: start;
+      }
+
+      .side-text {
+        font-family: "Barlow Condensed", sans-serif;
+        writing-mode: vertical-rl;
+        text-orientation: mixed;
+        font-size: 0.875rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        position: fixed;
+        top: 50%;
+        transform: translateY(-50%);
+        font-weight: 600;
+        z-index: 100;
+      }
+
+      .side-text.left {
+        left: 1.5rem;
+      }
+
+      .side-text.right {
+        right: 1.5rem;
+      }
+
+      .nav {
+        position: fixed;
+        top: 2rem;
+        right: 2rem;
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 1rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        font-weight: 600;
+        z-index: 100;
+      }
+
+      .hero {
+        grid-column: content-start / content-end;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 4rem 2rem;
+      }
+
+      .mega-title {
+        font-family: "Teko", sans-serif;
+        font-size: 20vw;
+        line-height: 0.85;
+        letter-spacing: -0.02em;
+        text-transform: uppercase;
+        margin-bottom: 4rem;
+        font-weight: 600;
+      }
+
+      .intro-text {
+        max-width: 36rem;
+        margin: 0 auto;
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 1.5rem;
+        line-height: 1.3;
+        font-weight: 600;
+      }
+
+      .section {
+        grid-column: content-start / content-end;
+        padding: 6rem 2rem;
+        border-top: 1px solid var(--primary-red);
+        display: grid;
+        grid-template-columns: [year] 12rem [content] 1fr;
+        gap: 2rem;
+        position: relative;
+      }
+
+      .section:hover {
+        background-color: rgba(227, 0, 27, 0.03);
+        transition: background-color 0.3s ease;
+      }
+
+      .section-year {
+        font-family: "Teko", sans-serif;
+        font-size: 3.5rem;
+        line-height: 1;
+        grid-column: year;
+        font-weight: 600;
+        position: sticky;
+        top: 6rem;
+      }
+
+      .section-content {
+        grid-column: content;
+        max-width: 44rem;
+      }
+
+      .section-title {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 3rem;
+        line-height: 0.9;
+        text-transform: uppercase;
+        margin-bottom: 2rem;
+        letter-spacing: 0.02em;
+        font-weight: 600;
+      }
+
+      .section-text {
+        font-size: 1.125rem;
+        line-height: 1.6;
+      }
+
+      .section-text p {
+        margin-bottom: 1.5rem;
+      }
+
+      .highlight {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 2rem;
+        line-height: 1.2;
+        margin: 2rem 0;
+        font-weight: 600;
+      }
+
+      @media (max-width: 768px) {
+        .grid {
+          grid-template-columns: [content-start] 1fr [content-end];
+        }
+
+        .side-text {
+          display: none;
+        }
+
+        .section {
+          grid-template-columns: 1fr;
+          padding: 4rem 1rem;
+        }
+
+        .section-year {
+          margin-bottom: 1rem;
+          position: relative;
+          top: 0;
+        }
+
+        .section-title {
+          font-size: 2rem;
+        }
+
+        .mega-title {
+          font-size: 15vw;
+        }
+
+        .highlight {
+          font-size: 1.5rem;
+        }
+
+        .section-text ul {
+          padding-left: 0;
+        }
+
+        .section-text ul li {
+          margin-bottom: 1rem;
+          position: relative;
+          padding-left: 1.5rem;
+        }
+
+        .move-down {
+          margin-top: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="side-text left">NARRATIVE TECHNOLOGY</div>
+    <div class="side-text right">DEPARTMENT OF LORE</div>
+
+    <nav class="nav">DEPARTMENT OF LORE INC.</nav>
+
+    <div class="scroll-container">
+      <div class="grid">
+        <section class="hero">
+          <h1 class="mega-title">DEPARTMENT OF LORE</h1>
+          <div class="intro-text">
+            First, a white paper. A short one, promise.
+          </div>
+          <div class="intro-text">
+            We understand that nobody likes complex presentations. We are all
+            used to elevator pitches. But then, where have they brought us?
+          </div>
+          <div class="intro-text">
+            If this were any simpler to explain, anybody could have done it. So,
+            if you could, lend us your ear.
+          </div>
+        </section>
+      </div>
+
+      <div class="grid">
+        <section class="section">
+          <div class="section-year">01</div>
+          <div class="section-content">
+            <h2 class="section-title">
+              What is humanity's most powerful, yet underutilized technology?
+            </h2>
+            <div class="section-text">
+              <p>Nuclear power? AI?</p>
+              <div class="highlight">It's lore.</div>
+              <p>Consider this:</p>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="grid">
+        <section class="section">
+          <div class="section-year">02</div>
+          <div class="section-content">
+            <h2 class="section-title">THE POWER OF STORIES</h2>
+            <div class="section-text">
+              <p>
+                When a 9-year-old watched Star Trek, that story rewired her
+                brain's reward system toward space exploration. Thirty years
+                later, NASA engineer Swati Mohan guided Perseverance to Mars.
+                Another story - about weapons of mass destruction and absolute
+                evil - rewired an entire nation, launching a trillion-dollar
+                war.
+              </p>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="grid">
+        <section class="section">
+          <div class="section-year">03</div>
+          <div class="section-content">
+            <h2 class="section-title">BIOLOGICAL IMPERATIVE</h2>
+            <div class="section-text">
+              <p>
+                This isn't just anthropology. This is biology. We evolved to
+                exchange stories as survival software - transmitting crucial
+                warnings, methods, hacks. A cave painting warning which berries
+                are poisonous, a folktale teaching wit and ingenuity, a film
+                about standing up to injustice - these are algorithms passed
+                down so each generation doesn't have to learn through fatal
+                trial and error.
+              </p>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="grid">
+        <section class="section">
+          <div class="section-year">04</div>
+          <div class="section-content">
+            <h2 class="section-title">NARRATIVE MANIPULATION EXPERIMENT</h2>
+            <div class="section-text">
+              <p>
+                In 1989, a biologist demonstrated this power of narrative. Male
+                barn swallows with darker red chests attract more females - it's
+                an evolutionary signal of genetic fitness. When he painted a
+                rejected male's chest with a one-dollar marker, females found
+                him irresistible. Even more irresistible than naturally
+                red-chested males.
+              </p>
+              <div class="highlight">
+                If a one-dollar marker can hack an entire species, imagine what
+                a trillion-dollar narrative machine can do.
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="grid">
+        <section class="section">
+          <div class="section-year">05</div>
+          <div class="section-content">
+            <h2 class="section-title">THE ENTERTAINMENT ENGINE</h2>
+            <div class="section-text">
+              <p>
+                This same principle powers the $3 trillion entertainment
+                industry. Just as makeup amplifies signals of health and youth,
+                our films, games, and stories amplify patterns our minds evolved
+                to seek.
+              </p>
+              <div class="highlight">
+                Like our craving for sugar and fat in times of scarcity, our
+                minds reward us to consume stories that once triggered
+                survival-critical learning.
+              </div>
+              <p>
+                Tales of rivalry and romance, threat and conquest, good and
+                evil, us and them. We call this hardwired reward mechanism
+                "entertainment".
+              </p>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="grid">
+        <section class="section">
+          <div class="section-year">06</div>
+          <div class="section-content">
+            <h2 class="section-title">BEYOND ENTERTAINMENT</h2>
+            <div class="section-text">
+              <p>
+                But stories do more than entertain, seduce and prevent mistakes.
+                We evolved to use stories as a simulation engine, testing out
+                futures before we live them. Through stories, we dream up better
+                futures and reverse-engineer the steps to reach them.
+              </p>
+              <div class="highlight">
+                They also simulate our worst nightmares, helping us recognize
+                our self-harming behaviors and course correct.
+              </div>
+              <p>
+                Inferences drawn from these countless stories – of what to seek
+                and what to avoid – become our values.
+              </p>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="grid">
+        <section class="section">
+          <div class="section-year">07</div>
+          <div class="section-content">
+            <h2 class="section-title">EMERGENCE OF LORE</h2>
+            <div class="section-text">
+              <p>
+                Lore emerges - when thousands of stories interact. It is a
+                living, breathing network of stories. Unlike a single narrative,
+                lore allows for mutation, contradiction, and synthesis.
+              </p>
+              <div class="highlight">
+                It's civilization's crystal ball, where millions of narrators
+                and narratives collectively process our past and negotiate our
+                futures.
+              </div>
+              <p>
+                As lore synthesizes thousands of stories, it becomes our shared
+                mental model of reality - shaping our beliefs and, ultimately,
+                our behaviors.
+              </p>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="grid">
+        <section class="section">
+          <div class="section-year">08</div>
+          <div class="section-content">
+            <h2 class="section-title">ECONOMIC IMPACT OF UNIVERSES</h2>
+            <div class="section-text">
+              <p>
+                Five narrative universes - Pokemon, Star Wars, Marvel, Harry
+                Potter, and Lord of the Rings - have generated $280 billion by
+                resonating with these same evolutionary instincts for survival,
+                growth, and transcendence.
+              </p>
+              <div class="highlight">
+                They combine the familiar with just enough of the impossible to
+                grip our attention - hardwired to look out for changes within
+                the familiar.
+              </div>
+              <p>Yet they barely scratch the surface of lore’s true power.</p>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="grid">
+        <section class="section">
+          <div class="section-year">09</div>
+          <div class="section-content">
+            <h2 class="section-title">THE CRISIS</h2>
+            <div class="section-text">
+              <div class="highlight">
+                We're using a quantum computer to run simple arithmetic. We have
+                god-like technology but stone-age stories.
+              </div>
+              <p>
+                Today's challenges - climate crisis, AI revolution, economic
+                disparity - are too complex for stories created for the
+                industrial age or earlier. The 'good versus evil' stories that
+                helped us survive in caves have become destructive in our
+                polarized world.
+              </p>
+              <p>
+                We're running civilization-scale experiments without a
+                simulator. We need a new crystal ball that shows us where we are
+                going and where we could.
+              </p>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="grid">
+        <section class="section">
+          <div class="section-year">10</div>
+          <div class="section-content">
+            <h2 class="section-title">NEW MYTHOLOGY</h2>
+            <div class="section-text">
+              <p>
+                We need new mythology. Immersive experiences as seductive as
+                Marvel, but profoundly meaningful to us. As thrilling as PUBG,
+                but more useful. As vast as the Mahabharata, but addressing
+                humanity's most urgent challenges.
+              </p>
+              <div class="highlight">
+                Lore that can help eight billion minds process unprecedented
+                complexity and imagine better futures. To change reality, we
+                must first change the stories we tell about it.
+              </div>
+              <p>
+                That's what we're building at Department of Lore - a narrative
+                engine that will do for human meaning what AI does for data:
+                transform collective experience into civilizational wisdom at
+                planetary scale.
+              </p>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="grid">
+        <section class="section">
+          <div class="section-year">11</div>
+          <div class="section-content">
+            <h2 class="section-title">OUR VISION</h2>
+            <div class="section-text">
+              <p>
+                Department of Lore pioneers a new era of storytelling by
+                creating interconnected narrative universes that span multiple
+                media formats. We're not just building entertainment franchises
+                - we're developing living, breathing worlds that will shape us.
+                We will transform how stories are created, shared, and
+                experienced across platforms, combining cutting-edge technology
+                with timeless storytelling.
+              </p>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="grid">
+        <section class="section">
+          <div class="section-year">12</div>
+          <div class="section-content">
+            <h2 class="section-title">WHAT WE CREATE</h2>
+            <div class="section-text">
+              <div class="highlight">Massive Story Universes</div>
+              <ul>
+                <li>
+                  <i class="fas fa-globe"></i> Grand-scale mythologies crafted
+                  with meticulous worldbuilding detail - every universe has its
+                  own physics, ecology, cultures, histories, and geopolitics,
+                  creating rich and believable worlds.
+                </li>
+                <li>
+                  <i class="fas fa-users"></i> Living worlds that evolve based
+                  on how audiences engage with them and how creators expand
+                  them, making every fan part of the story.
+                </li>
+                <li>
+                  <i class="fas fa-flask"></i> Science fiction and fantasy
+                  narratives that tackle real-world challenges like climate
+                  crisis, AI revolution, and social inequality in ways that
+                  inspire solutions.
+                </li>
+                <li>
+                  <i class="fas fa-book-open"></i> Experiences as vast and
+                  culturally significant as ancient myths, but addressing the
+                  complexities of our modern world.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="grid">
+        <section class="section">
+          <div class="section-year">13</div>
+          <div class="section-content">
+            <h2 class="section-title">CROSS-PLATFORM EXPERIENCES</h2>
+            <div class="section-text">
+              <ul>
+                <li>
+                  Stories that exist simultaneously across games, films, books,
+                  toys, and physical spaces - not mere adaptations, but
+                  interconnected parts of a larger narrative.
+                </li>
+                <li>
+                  Narratives designed to reveal new dimensions through each
+                  medium - what you discover in a game enriches what you read in
+                  a book, watch in a film, or experience in a theme park.
+                </li>
+                <li>
+                  Unified digital platforms (Maya Storypad, Maya Comics, Maya
+                  Anime) where creators and fans can contribute to, experience,
+                  and share stories seamlessly.
+                </li>
+                <li>
+                  Global distribution with cultural adaptation - stories that
+                  resonate across languages and cultures while maintaining their
+                  core essence.
+                </li>
+                <li>
+                  Physical spaces - from themed attractions to residential
+                  communities - where people can live inside our story
+                  universes.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="grid">
+        <section class="section">
+          <div class="section-year">14</div>
+          <div class="section-content">
+            <h2 class="section-title">LIVING NARRATIVE ECOSYSTEMS</h2>
+            <div class="section-text">
+              <ul>
+                <li>
+                  Story worlds that grow through both professional artists and
+                  community creativity, ensuring constant evolution and fresh
+                  perspectives.
+                </li>
+                <li>
+                  Vast library of story elements - from character designs and
+                  background art to music and sound effects - that creators can
+                  mix and remix into new stories.
+                </li>
+                <li>
+                  Self-reinforcing system where each new story enriches the
+                  universe and creates opportunities for more stories.
+                </li>
+                <li>
+                  Dynamic framework allowing multiple interpretations and
+                  parallel narratives, just like traditional mythologies evolved
+                  through many storytellers.
+                </li>
+                <li>
+                  Strategic promotion across platforms, where success in one
+                  medium drives discovery in others.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="grid">
+        <section class="section">
+          <div class="section-year">15</div>
+          <div class="section-content">
+            <h2 class="section-title">HOW WE CREATE</h2>
+            <div class="section-text">
+              <div class="highlight">Collaborative Creation Framework</div>
+              <ul>
+                <li>
+                  Three-phase expansion: We begin with foundational in-house
+                  stories, expand through commissioned works from industry
+                  leaders, then open to curated community contributions.
+                </li>
+                <li>
+                  Revolutionary licensing system where independent creators can
+                  build upon any element of our universes with one click - from
+                  using a minor character to expanding an entire world.
+                </li>
+                <li>
+                  Global creative community with verified professionals - from
+                  novelists and game designers to visual artists and performers
+                  - ensuring consistent quality across all projects.
+                </li>
+                <li>
+                  Strategic talent development where we nurture new voices into
+                  tomorrow's storytelling stars, coordinating their work across
+                  multiple formats.
+                </li>
+                <li>
+                  End-to-end production and distribution - from digital creation
+                  tools to physical manufacturing - delivering content directly
+                  to audiences worldwide.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="grid">
+        <section class="section">
+          <div class="section-year">16</div>
+          <div class="section-content">
+            <h2 class="section-title">QUALITY-FOCUSED INFRASTRUCTURE</h2>
+            <div class="section-text">
+              <ul>
+                <li>
+                  World-class creative standards maintained through
+                  collaboration with renowned storytellers and emerging talents.
+                </li>
+                <li>
+                  Fair, transparent compensation where creators earn from both
+                  their original work and its use in derivative works.
+                </li>
+                <li>
+                  Strategic partnerships with global studios, publishers, and
+                  platforms to ensure professional execution at every level.
+                </li>
+                <li>
+                  Advanced content evaluation combining AI analysis of narrative
+                  elements with human curation and community feedback.
+                </li>
+                <li>
+                  Fast-track system that identifies popular stories and quickly
+                  adapts them to new formats while maintaining quality.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="grid">
+        <section class="section">
+          <div class="section-year">17</div>
+          <div class="section-content">
+            <h2 class="section-title">ADVANCED TECHNOLOGY INTEGRATION</h2>
+            <div class="section-text">
+              <ul>
+                <li>
+                  AI systems that track narrative consistency across millions of
+                  stories, helping creators work within established worlds.
+                </li>
+                <li>
+                  Smart contracts ensuring automatic, transparent payment to
+                  creators whenever their work is used or adapted.
+                </li>
+                <li>
+                  Stories that adapt to reader preferences and choices while
+                  maintaining narrative integrity.
+                </li>
+                <li>
+                  Next-generation AR/VR experiences that blend digital
+                  storytelling with physical spaces.
+                </li>
+                <li>
+                  Single sign-on platform connecting all story experiences and
+                  creator tools.
+                </li>
+                <li>
+                  Data analytics identifying trending themes and underserved
+                  audience interests.
+                </li>
+                <li>
+                  Machine learning technology that assists in adapting stories
+                  across formats - helping turn books into games, games into
+                  films, while preserving their core appeal.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="grid">
+        <section class="section">
+          <div class="section-year">18</div>
+          <div class="section-content">
+            <h2 class="section-title">HOW WE SCALE</h2>
+            <div class="section-text">
+              <div class="highlight">Core Revenue Streams:</div>
+              <ul>
+                <li>
+                  <strong>Premium Story Universes:</strong> Flagship games,
+                  films, and book series developed with industry leaders - high
+                  production value originals that establish our story worlds.
+                </li>
+                <li>
+                  <strong>Access:</strong> Tiered membership offering early
+                  access, exclusive content, and creator tools across all
+                  platforms.
+                </li>
+                <li>
+                  <strong>Creator Economy:</strong> Revenue share from
+                  community-generated content, licensing fees, and adaptation
+                  rights.
+                </li>
+                <li>
+                  <strong>Physical Products:</strong> High-quality merchandise,
+                  collectibles, and real-world experiences.
+                </li>
+                <li>
+                  <strong>Platform Services:</strong> Tools, analytics, and
+                  distribution services for third-party creators and IP holders.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="grid">
+        <section class="section">
+          <div class="section-year">19</div>
+          <div class="section-content">
+            <h2 class="section-title">HOW WE SCALE</h2>
+
+            <div class="section-text">
+              <div class="highlight">Distribution Strategy:</div>
+              <ul>
+                <li>
+                  <strong>Digital-First Launch:</strong> Each story universe
+                  debuts through our platforms, building immediate community
+                  engagement.
+                </li>
+                <li>
+                  <strong>Strategic Windowing:</strong> Calculated release
+                  timing across formats to maximize impact and maintain audience
+                  momentum.
+                </li>
+                <li>
+                  <strong>Localization Pipeline:</strong> Simultaneous global
+                  release in major markets, followed by rapid expansion to
+                  emerging regions.
+                </li>
+                <li>
+                  <strong>Partnership Network:</strong> Strategic alliances with
+                  global retailers, streaming platforms, and gaming
+                  marketplaces.
+                </li>
+                <li>
+                  <strong>Direct-to-Community:</strong> Premium physical
+                  products and experiences sold directly to our most engaged
+                  audiences.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="grid">
+        <section class="section">
+          <div class="section-year">20</div>
+          <div class="section-content">
+            <h2 class="section-title">HOW WE SCALE</h2>
+            <div class="section-text">
+              <div class="highlight">Community Growth:</div>
+
+              <ul>
+                <li>
+                  <strong>Organic Expansion:</strong> Each new universe attracts
+                  its own audience while cross-pollinating with existing
+                  communities.
+                </li>
+                <li>
+                  <strong>Creator Incentives:</strong> Attractive revenue
+                  sharing and support tools that draw professional creators and
+                  their followers.
+                </li>
+                <li>
+                  <strong>Network Effects:</strong> Built-in mechanisms where
+                  each new creation increases the value of the entire ecosystem.
+                </li>
+                <li>
+                  <strong>Community Rewards:</strong> Recognition and
+                  opportunities for active community members who help grow the
+                  platform.
+                </li>
+                <li>
+                  <strong>Educational Partnerships:</strong> Collaboration with
+                  schools and institutions to nurture next-generation
+                  storytellers.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="grid">
+        <section class="section">
+          <div class="section-year">21</div>
+          <div class="section-content">
+            <h2 class="section-title">HOW WE SCALE</h2>
+            <div class="section-text">
+              <div class="highlight">Financial Scaling:</div>
+              <ul>
+                <li>
+                  <strong>Asset Efficiency:</strong> Each story element can
+                  generate revenue across multiple formats and adaptations.
+                </li>
+                <li>
+                  <strong>Compounding Value:</strong> New content enriches
+                  existing universes, increasing their commercial potential.
+                </li>
+                <li>
+                  <strong>Infrastructure Leverage:</strong> Core technology and
+                  distribution systems become more profitable with scale.
+                </li>
+                <li>
+                  <strong>Market Expansion:</strong> Systematic growth from core
+                  audiences to mainstream markets to global reach.
+                </li>
+                <li>
+                  <strong>Diversified Income:</strong> Multiple revenue streams
+                  reduce risk and create stability for continued growth.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="grid">
+        <section class="section">
+          <div class="section-year">22</div>
+          <div class="section-content">
+            <h2 class="section-title">WHO WE ARE</h2>
+            <div class="section-text">
+              <div class="highlight">Anand Gandhi, Co-Founder</div>
+              <p>
+                Anand Gandhi is a visionary filmmaker renowned for ushering in a
+                new wave of Indian cinema. His debut film, Ship of Theseus, won
+                the National Award for Best Picture—the Indian equivalent of an
+                Academy Award—and was listed among 15 “life-changing” films of
+                the past century by The Critics’ Circle, UK. His subsequent
+                film, Tumbbad, became the region’s most-watched genre film of
+                the last two decades. He transformed the documentary cinema
+                landscape by producing An Insignificant Man. He pioneered
+                virtual reality narrative experiences. Anand’s work has elicited
+                measurable positive behavior impact and progressive legal
+                precedent in the region. It has also inspired hundreds of
+                academic commentaries and papers. His work has premiered and
+                been awarded at the International Film festivals of Toronto,
+                Venice, Rotterdam, Transylvania, Sydney, London BFI, Dubai and
+                Tokyo amongst hundreds of others. His films have been acquired
+                by Disney, Netflix, Amazon PrimeVideo, Channel 4, BBC, Hulu,
+                among others.
+              </p>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="grid">
+        <section class="section">
+          <div class="section-year">23</div>
+          <div class="section-content">
+            <h2 class="section-title">WHO WE ARE</h2>
+            <div class="section-text">
+              <div class="highlight">Zain Memon, Co-Founder</div>
+              <p>
+                Zain Memon is a pioneering game designer who created SHASN and
+                AZADI—award-winning political strategy board games that have
+                become India’s most successful tabletop IPs. His games have
+                introduced India to modern board gaming and fostered a new
+                culture of tabletop gaming in the country. Zain is recognized as
+                the leading Indian authority on game design. Zain has run the
+                three largest ever media crowdfunding campaigns out of India,
+                and led the production for an entire slate of films, games, and
+                series at Department Of Lore.
+              </p>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="grid">
+        <section class="section">
+          <div class="section-year">24</div>
+          <div class="section-content">
+            <h2 class="section-title">WHO WE ARE</h2>
+            <div class="section-text">
+              <div class="highlight">Raju Chekuri, Partner/Investor</div>
+              <p>
+                Raju Chekuri is a pioneering Silicon Valley entrepreneur and
+                technology leader who has founded multiple industry-defining
+                companies. As founder, chairman, president, and CEO of
+                Netenrich, he revolutionized enterprise IT operations through
+                AI-driven solutions.
+              </p>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="grid">
+        <section class="section">
+          <div class="section-year">25</div>
+          <div class="section-content">
+            <h2 class="section-title">WHO WE ARE</h2>
+            <div class="section-text">
+              <div class="highlight">Matt Loze, Advisor</div>
+              <p>
+                One of television’s most influential executives, Matt Loze has
+                shaped global entertainment over the past two decades. As
+                President of Scripted Entertainment at Halcyon Studios, he has
+                overseen the development and production of acclaimed series
+                including Mr. Mercedes, Hunters, and The Mysterious Benedict
+                Society.
+              </p>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="grid">
+        <section class="section">
+          <div class="section-year">26</div>
+          <div class="section-content">
+            <h2 class="section-title">OUR FIRST WORLD</h2>
+            <div class="section-text">
+              <p>
+                We begin with Maya - a story universe that demonstrates the full
+                potential of our vision. Set on the planet Samsaar, Maya
+                introduces a civilization where a superintelligent network,
+                grown from ancient trees, governs society through shared dreams.
+                From birth, every child is tethered to this network, immersing
+                in simulations far more vivid than reality itself.
+              </p>
+              <div class="highlight">This is a world where:</div>
+              <ul>
+                <li>
+                  Multiple sapient species share an uneasy coexistence - from
+                  shape-shifting rakshasi to the enslaved yakshi.
+                </li>
+                <li>
+                  Immortal beings called the Divya use big data to steer
+                  civilization's future.
+                </li>
+                <li>
+                  Ancient biology meshes with advanced technology, creating a
+                  dream network that remembers every hope, fear, and desire.
+                </li>
+                <li>
+                  Control masquerades as benevolence, and progress shadows
+                  inequality.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="grid">
+        <section class="section">
+          <div class="section-year">27</div>
+          <div class="section-content">
+            <h2 class="section-title">OUR FIRST WORLD</h2>
+            <div class="section-text">
+              <p>
+                The story ignites when a young man discovers he's "nirmaya" -
+                invisible to the all-seeing Maya network. As the Divya announce
+                their trials offering godhood and immortality, he faces a
+                choice: compete for ultimate power or challenge the very
+                foundation of their world.
+              </p>
+              <div class="highlight">
+                The Maya Universe will launch in March 2025, beginning with the
+                novel "Seed Takes Root." Over the following months, this
+                universe will expand through:
+              </div>
+              <ul>
+                <li>A series of strategy board games.</li>
+                <li>
+                  Graphic novels revealing hidden histories and new heroes.
+                </li>
+                <li>
+                  Digital games where players immerse in Samsaar’s conflicts.
+                </li>
+                <li>
+                  An animated series delving into the origins of the Maya
+                  network.
+                </li>
+                <li>
+                  A feature film bringing this world to stunning visual life.
+                </li>
+              </ul>
+              <div class="move-down">
+                Most importantly, we're building dedicated story platforms -
+                Maya Storypad, Maya Comics, and Maya Anime - where creators and
+                audiences can explore, expand, and reimagine this universe
+                together. Through these platforms, hundreds of unique characters
+                and story arcs will evolve, each adding new dimensions to this
+                rich tapestry of interconnected narratives.
+              </div>
+              <div class="highlight">This is just the beginning.</div>
+              <p>
+                Maya demonstrates how Department of Lore transforms storytelling
+                - creating living worlds that grow with their audiences.
+              </p>
+            </div>
+          </div>
+        </section>
+      </div>
+
+    <script>
+      const scrollContainer = document.querySelector(".scroll-container");
+      let isScrolling = false;
+
+      scrollContainer.addEventListener(
+        "wheel",
+        (e) => {
+          e.preventDefault();
+
+          if (isScrolling) return;
+          isScrolling = true;
+
+          const slideHeight = window.innerHeight;
+          const currentScroll = scrollContainer.scrollTop;
+          const targetScroll =
+            e.deltaY > 0
+              ? Math.ceil(currentScroll / slideHeight) * slideHeight +
+                slideHeight
+              : Math.floor(currentScroll / slideHeight) * slideHeight -
+                slideHeight;
+
+          scrollContainer.scrollTo({
+            top: Math.max(
+              0,
+              Math.min(targetScroll, scrollContainer.scrollHeight - slideHeight)
+            ),
+            behavior: "smooth",
+          });
+
+          setTimeout(() => {
+            isScrolling = false;
+          }, 1000);
+        },
+        { passive: false }
+      );
+    </script>
+  </body>
+</html>
